@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BTLwebNC" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-U623HSJ\HUYSQL;Initial Catalog=BTLwebNC;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BTLwebNCConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblBaidang" Member="tblBaidangs">
+    <Type Name="tblBaidang">
+      <Column Name="PK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sTieude" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="iLuotxem" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dNgaydang" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_iChudeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tblBaidang_tblBinhluan" Member="tblBinhluans" ThisKey="PK_iBaidangID" OtherKey="FK_iBaidangID" Type="tblBinhluan" />
+      <Association Name="tblChude_tblBaidang" Member="tblChude" ThisKey="FK_iChudeID" OtherKey="PK_iChudeID" Type="tblChude" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblUser" Member="tblUsers">
+    <Type Name="tblUser">
+      <Column Name="PK_iUserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sPassword" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tblUser_tblBinhluan" Member="tblBinhluans" ThisKey="PK_iUserID" OtherKey="FK_iUserID" Type="tblBinhluan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBinhluan" Member="tblBinhluans">
+    <Type Name="tblBinhluan">
+      <Column Name="PK_iBinhluanID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_iUserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblBaidang_tblBinhluan" Member="tblBaidang" ThisKey="FK_iBaidangID" OtherKey="PK_iBaidangID" Type="tblBaidang" IsForeignKey="true" />
+      <Association Name="tblUser_tblBinhluan" Member="tblUser" ThisKey="FK_iUserID" OtherKey="PK_iUserID" Type="tblUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblChude" Member="tblChudes">
+    <Type Name="tblChude">
+      <Column Name="PK_iChudeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="sTenchude" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tblChude_tblBaidang" Member="tblBaidangs" ThisKey="PK_iChudeID" OtherKey="FK_iChudeID" Type="tblBaidang" />
+    </Type>
+  </Table>
+  <Function Name="dbo.spBaidang_delete" Method="spBaidang_delete">
+    <Parameter Name="PK_iBaidangID" Parameter="pK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spLogin_Update" Method="spLogin_Update">
+    <Parameter Name="sName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="sPassword" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="sAnh" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="bQuyen" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="sTen" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spBaidang_getbyID" Method="spBaidang_getbyID">
+    <Parameter Name="PK_iBaidangID" Parameter="pK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spBaidang_getbyIDResult">
+      <Column Name="PK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTieude" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="iLuotxem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dNgaydang" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_iChudeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBaidang_Hienluotxem" Method="spBaidang_Hienluotxem">
+    <Parameter Name="PK_iBaidangID" Parameter="pK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="iLuotxem" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spBaidang_Insert" Method="spBaidang_Insert">
+    <Parameter Name="sTieude" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="sNoidung" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="iLuotxem" Type="System.Int32" DbType="Int" />
+    <Parameter Name="dNgaydang" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="FK_iChudeID" Parameter="fK_iChudeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="sAnh" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spBaidang_Luotxem" Method="spBaidang_Luotxem">
+    <Parameter Name="iLuotxem" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PK_iBaidangID" Parameter="pK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spBaidang_new" Method="spBaidang_new">
+    <ElementType Name="spBaidang_newResult">
+      <Column Name="PK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTieude" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="iLuotxem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dNgaydang" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_iChudeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBaidang_Update" Method="spBaidang_Update">
+    <Parameter Name="PK_iBaidangID" Parameter="pK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="sTieude" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="sNoidung" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="iLuotxem" Type="System.Int32" DbType="Int" />
+    <Parameter Name="dNgaydang" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="FK_iChudeID" Parameter="fK_iChudeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="sAnh" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spBinhluan_getbyBaidangID" Method="spBinhluan_getbyBaidangID">
+    <Parameter Name="FK_iBaidangID" Parameter="fK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spBinhluan_getbyBaidangIDResult">
+      <Column Name="PK_iBinhluanID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBinhluan_Insert" Method="spBinhluan_Insert">
+    <Parameter Name="sNoidung" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="FK_iBaidangID" Parameter="fK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FK_sName" Parameter="fK_sName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spChude_get" Method="spChude_get">
+    <ElementType Name="spChude_getResult">
+      <Column Name="PK_iChudeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTenchude" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spChude_getbyID" Method="spChude_getbyID">
+    <Parameter Name="PK_iChudeID" Parameter="pK_iChudeID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spChude_getbyIDResult">
+      <Column Name="PK_iChudeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTenchude" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spLogin_delete" Method="spLogin_delete">
+    <Parameter Name="sName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spLogin_get" Method="spLogin_get">
+    <Parameter Name="sName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="sPassword" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spLogin_getResult">
+      <Column Name="iUserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sPassword" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bQuyen" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spLogin_getName" Method="spLogin_getName">
+    <Parameter Name="sName" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="spLogin_getNameResult">
+      <Column Name="iUserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sPassword" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bQuyen" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spLogin_insert" Method="spLogin_insert">
+    <Parameter Name="sName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="sPassword" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="sAnh" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="bQuyen" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="sTen" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spBinhluan_getbyBaidang" Method="spBinhluan_getbyBaidang">
+    <Parameter Name="FK_iBaidangID" Parameter="fK_iBaidangID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spBinhluan_getbyBaidangResult">
+      <Column Name="sTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iUserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_iBinhluanID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBaidang_getbyChude" Method="spBaidang_getbyChude">
+    <Parameter Name="FK_iChudeID" Parameter="fK_iChudeID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spBaidang_getbyChudeResult">
+      <Column Name="PK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTieude" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="iLuotxem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dNgaydang" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_iChudeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBaidang_random" Method="spBaidang_random">
+    <ElementType Name="spBaidang_randomResult">
+      <Column Name="PK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTieude" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="iLuotxem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dNgaydang" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_iChudeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBaidang_find" Method="spBaidang_find">
+    <Parameter Name="sTieude" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="dNgaydang" Type="System.String" DbType="NVarChar(200)" />
+    <ElementType Name="spBaidang_findResult">
+      <Column Name="PK_iBaidangID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTieude" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sNoidung" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="iLuotxem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dNgaydang" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_iChudeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sAnh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBinhluan_delete" Method="spBinhluan_delete">
+    <Parameter Name="PK_iBinhluanID" Parameter="pK_iBinhluanID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spLogin_Update1" Method="spLogin_Update1">
+    <Parameter Name="sName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="sPassword" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="sTen" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

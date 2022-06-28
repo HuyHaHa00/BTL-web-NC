@@ -1,0 +1,83 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="IndexPage.master.cs" Inherits="BTL_webNC.IndexPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Blog thể thao</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="style.css" runat="server" />
+    <script src="Script.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style>
+        #menuHide{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">       
+    <%--<div class="col-1 ban"></div>--%>
+    <%--<div class="col-10">--%>
+
+       <%-- <div class="header">
+            <h1>BLOG SPORT</h1>
+        </div>--%>
+        <a href="Testing.aspx">Bamvaoday</a>
+        <div class="col-2 header">
+            <span>BLOG SPORT</span>
+        </div>
+        
+        <div class="col-10">
+            <div id="menu">
+            <ul  id="menulist" runat="server">
+                <li><a href="index.aspx">Blog</a>
+                    
+                        <asp:Repeater ID="rpBaidang" runat="server">
+                            <ItemTemplate>                       
+                                    <li><a href="tittle.aspx?id=<%# Eval("PK_iChudeID") %>"><%# Eval("sTenchude") %></a></li>                       
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    
+                </li>
+                <%--<asp:Repeater ID="Repeater1" runat="server">
+                    <ItemTemplate>
+                            <li><a href="#"><%# Eval("sTenchude") %></a></li>
+                    </ItemTemplate>
+                </asp:Repeater>--%>
+                
+                <li>
+                    <a runat="server" id="lienHe" href="info.aspx">Liên hệ</a>
+                </li>
+                <li id="quanli" runat="server" style="display:none">
+                    <a href="account.aspx">Tài khoản</a>
+                </li>
+            </ul>
+        </div>
+            
+            
+        </div>
+        <div class="thanhcongcu">
+            <div class="col-9 thanhtimkiem" ><asp:TextBox ID="txtTimkiem" runat="server" AutoCompleteType="Search"></asp:TextBox><asp:Button ID="btnTimkiem" runat="server" Text="Tìm kiếm" OnClick="btnTimkiem_Click" />
+                <label runat="server" id="lbTimkiem"></label>
+            </div>
+            
+            <div class="col-3 btnDangnhap">
+                <asp:Button ID="btnLogout" CssClass="btnLogout" runat="server" Text="" OnClick="btnLogout_Click" />
+                 <a id="dangbaiLink" runat="server" href="insert.aspx"></a>
+                <a id="loginLink" runat="server" href="login.aspx" >Đăng nhập </a><a id="registerLink" runat="server" href="register.aspx">/ Đăng ký</a></div>
+        </div>
+        <%--<div>
+            <h1>ABHH</h1>
+        </div>--%>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+    </form>
+    <div class="footer"><p>Design by Vip pro team</p></div>
+    <%--</div>--%>
+    <%--<div class="col-1 ban"></div>--%>
+        
+</body>
+</html>
